@@ -16,7 +16,8 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy="role")
-    private List<User> users;
+    private List<User> users;  //Ý nghĩa: Các phần tử trong bảng User được kết nối với bảng này ( bảng role)
+                               // bằng 1 thuộc tính có tên là "role" được khai báo tại bảng user (mở class "user" ra sẽ biết)
 
     public long getId() {
         return id;

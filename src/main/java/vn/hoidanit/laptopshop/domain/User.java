@@ -20,7 +20,8 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role;
+    private Role role;    //ý nghĩa: đối tượng 'role' này khai báo ở đy
+                       // và được dùng để làm ánh xạ cho class role (mở class role ra thì biết)
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
@@ -76,3 +77,5 @@ public class User {
     }
 
 }
+
+
