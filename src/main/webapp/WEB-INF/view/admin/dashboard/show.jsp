@@ -1,3 +1,29 @@
+<%--1. Relative Path (Đường dẫn tương đối):
+Khi bạn sử dụng đường dẫn tương đối như css/styles.css, đường dẫn này sẽ được tính từ URL của trang hiện tại. Ví dụ:
+Nếu URL của trang là http://localhost:8080/admin/product.jsp, thì trình duyệt sẽ cố gắng tải tài nguyên CSS từ http://localhost:8080/admin/css/styles.css.
+Nếu file CSS không tồn tại ở vị trí đó, trình duyệt sẽ báo lỗi và không tải được file CSS.
+=>Tóm lại: đường dẫn tương đối không có dấu gạch / ở đầu
+2. Absolute Path (Đường dẫn tuyệt đối):
++, Khi bạn sử dụng đường dẫn tuyệt đối như /css/styles.css, nó sẽ được tính từ gốc của ứng dụng (context root). Ví dụ:
+Nếu URL của trang là http://localhost:8080/admin/product.jsp, thì đường dẫn tuyệt đối /css/styles.css sẽ được dịch sang http://localhost:8080/css/styles.css.
+Điều này đảm bảo rằng trình duyệt sẽ luôn tìm kiếm file CSS ở vị trí chính xác, bất kể trang hiện tại nằm ở đâu trong cấu trúc thư mục.
+Kết luận:
+Khi bạn sử dụng css/styles.css, trình duyệt có thể đang tìm kiếm file CSS ở vị trí không tồn tại, dẫn đến lỗi.
+Khi bạn sử dụng /css/styles.css, bạn đang cung cấp một đường dẫn tuyệt đối, đảm bảo rằng file CSS được tải từ vị trí đúng đắn trong cấu trúc thư mục của ứng dụng.
+Vì vậy, để tránh lỗi và đảm bảo rằng các file CSS của bạn được tải đúng cách, sử dụng đường dẫn tuyệt đối như /css/styles.css là một lựa chọn an toàn hơn.
++, Nếu cần truy cập một tệp trong thư mục cha, bạn có thể sử dụng: ../file.txt (trong đó .. đại diện cho một cấp trên thư mục hiện tại).
+   VD: Cấu trúc 1 thư mục như sau:
+   /home/username/
+    ├── documents/
+    │    └── project/
+    │         └── file1.txt
+    └── notes/
+          └── file2.txt
+   Giờ tại file1.txt mà muốn sử dụng file2.txt thì ta cần gõ đường dẫn như sau: ../notes/file2.txt ( ở đây .. đại diện cho thư mục cha gần nhất)
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +40,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+    <a class="navbar-brand ps-3" href="/">Laptopshop</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
@@ -43,9 +69,21 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="/admin">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
+                    </a>
+                    <a class="nav-link" href="/admin/user">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        User
+                    </a>
+                    <a class="nav-link" href="/admin/order">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Order
+                    </a>
+                    <a class="nav-link" href="/admin/product">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Product
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -103,7 +141,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                Start Bootstrap
+                Admin
             </div>
         </nav>
     </div>
@@ -665,7 +703,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Huy1ee04 2024</div>
+                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
                     <div>
                         <a href="#">Privacy Policy</a>
                         &middot;
