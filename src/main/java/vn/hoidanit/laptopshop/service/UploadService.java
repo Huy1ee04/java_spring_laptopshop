@@ -18,9 +18,10 @@ public class UploadService {
         this.servletContext = servletContext;
     }
     public String handleUPloadFile(MultipartFile file, String targetFolder) throws IOException {
+        if (file.isEmpty()) return "";  //Nếu không up avatar thì trả về rỗng
+        String rootPath = this.servletContext.getRealPath("/resources/images");
         String finalName = "";
         byte[] bytes = file.getBytes();
-        String rootPath = this.servletContext.getRealPath("/resources/images");
         File dir = new File(rootPath + File.separator + targetFolder);
         if (!dir.exists())
             dir.mkdirs();  //mkdirs: viết tắt của make directories
