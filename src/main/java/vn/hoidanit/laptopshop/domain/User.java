@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import vn.hoidanit.laptopshop.service.validator.StrongPassword;
 
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    @NotNull
+    @NotNull // đây là annotation của dependencies Validator, cần phải cài về
     @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @NotNull
-    @Size(min = 2, message = "Password phải có tối thiểu 2 ký tự")
+    @Size(min = 3, message = "Password phải có tối thiểu 3 ký tự")
+    @StrongPassword
     private String password;
     @NotNull
     @Size(min = 3, message = "Fullname phải có tối thiểu 3 ký tự")

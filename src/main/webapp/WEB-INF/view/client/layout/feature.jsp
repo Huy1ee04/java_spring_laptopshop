@@ -51,4 +51,4 @@
         </div>
     </div>
 </div>
-<!-- Features Section End -->
+<!-- Featurs Section End -->

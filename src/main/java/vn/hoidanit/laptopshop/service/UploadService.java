@@ -14,24 +14,36 @@ import java.io.IOException;
 @Service
 public class UploadService {
     private final ServletContext servletContext;
+
     public UploadService(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
-    public String handleUPloadFile(MultipartFile file, String targetFolder) throws IOException {
-        if (file.isEmpty()) return "";  //Nếu không up avatar thì trả về rỗng
+
+    public String handleSaveUploadFile(MultipartFile file, String targetFolder) {
+        // don't upload file
+        if (file.isEmpty())
+            return "";
+        // relative path: absolute path
         String rootPath = this.servletContext.getRealPath("/resources/images");
         String finalName = "";
-        byte[] bytes = file.getBytes();
-        File dir = new File(rootPath + File.separator + targetFolder);
-        if (!dir.exists())
-            dir.mkdirs();  //mkdirs: viết tắt của make directories
-        // Create the file on server
-        finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-        File serverFile = new File(dir.getAbsolutePath() + File.separator +finalName);
-        BufferedOutputStream stream = new BufferedOutputStream(
-                new FileOutputStream(serverFile));
-        stream.write(bytes);
-        stream.close();
-        return serverFile.getAbsolutePath();
+        try {
+            byte[] bytes = file.getBytes();
+            File dir = new File(rootPath + File.separator + targetFolder);
+            if (!dir.exists())
+                dir.mkdirs();  //mkdirs: viết tắt của make directories
+            // Create the file on server
+            finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
+
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName);
+            // uuid
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(serverFile));
+            stream.write(bytes);
+            stream.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return finalName;
     }
 }

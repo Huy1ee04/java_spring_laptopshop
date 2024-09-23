@@ -49,14 +49,15 @@ public class UserController {
     public String createUserPage(
             Model model,
             @ModelAttribute("newUser") @Valid User user,    //Khi một yêu cầu POST tới URL /admin/user/create, dữ liệu của người dùng sẽ được ánh xạ vào đối tượng User (thông qua @ModelAttribute).
-            BindingResult newUserBindingResult,    // Phải khai báo tham số này ở phía sau của @ModelAttribute, không được khai báo đằng trước @ModelAttribute
+            BindingResult newUserBindingResult,    // chứa kết quả kiểm tra dữ liệu (validation). Nếu có lỗi trong quá trình kiểm tra, các lỗi này sẽ được lưu trữ ở đây. Dựa vào đó, chương trình có thể xử lý tiếp
+                                                   // Phải khai báo tham số này ở phía sau của @ModelAttribute, không được khai báo đằng trước @ModelAttribute
             @RequestParam("avtFile") MultipartFile file) throws IOException {
 
-        String avatar = this.uploadService.handleUPloadFile(file,"avatar");     //video 90+91: upload avatar người dùng.
+        String avatar = this.uploadService.handleSaveUploadFile(file,"avatar");     //video 90+91: upload avatar người dùng.
         String hashedPassword = this.bCryptPasswordEncoder.encode(user.getPassword());     //Video 93
-
-        //video 102:
+        //lấy danh sách lỗi
         List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        //in thông tin của từng lỗi trên terminal
         for (FieldError error : errors) {
             System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
         }
@@ -129,21 +130,5 @@ public class UserController {
 
 }
 
-
-//Code theo mô hinh restful
-//@RestController
-//public class UserController {
-
-//Dependence ijection
-//    private UserService userService;
-//    public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
-
-//    @GetMapping("/")
-//    public String getHomePage() {
-//        return this.userService.handleHello();
-//    }
-//}
 
 
